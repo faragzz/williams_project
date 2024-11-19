@@ -1,7 +1,8 @@
 <template>
   <div class="container">
     <div class="partOne">
-      <div style="margin-bottom: 150px; margin-left: 100px; margin-right: 100px">
+      <div style="margin-bottom: 150px;position: relative;margin-left: 100px;margin-right: 100px">
+        <Section :idx="active" :data="prevData" />
         <Section :idx="active" :data="currentData" />
       </div>
       <div class="nav">
@@ -11,17 +12,18 @@
               :src="arrowLeft"
               width="24px"
               height="24px"
-              v-show="active !== 0"
+              :style="{ visibility: active !== 0 ? 'visible' : 'hidden' }"
               @click="prevItem"
           />
           <img
               :src="arrowRight"
               width="24px"
               height="24px"
-              v-show="active !== images.length - 1"
+              :style="{ visibility: active !== images.length - 1 ? 'visible' : 'hidden' }"
               @click="nextItem"
           />
         </div>
+
       </div>
     </div>
     <div class="partTwo">
@@ -67,6 +69,9 @@ export default {
     currentData() {
       return data[this.active];
     },
+    prevData(){
+      return data[this.prevImg];
+    }
   },
   methods: {
     updateActive(newActive) {
@@ -122,6 +127,7 @@ export default {
   align-items: center;
   width: 50vw;
   height: 100vh;
+  position: relative;
 }
 
 .partTwo {
@@ -132,7 +138,12 @@ export default {
   width: 50vw;
   height: 100vh;
 }
-
+.sec{
+  position: absolute;
+  left: -500px;
+  top: 50%;
+  width: 100vw;
+}
 .image-wrapper {
   position: absolute;
   width: 100%;
