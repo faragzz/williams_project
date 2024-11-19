@@ -1,5 +1,4 @@
 import { fileURLToPath, URL } from 'node:url'
-
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
@@ -12,7 +11,15 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
+  },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        // If you have any global SCSS settings, you can add them here
+        additionalData: `@import "@/styles/variables.scss";` // optional, if you have global styles or variables
+      },
     },
   },
 })
