@@ -1,9 +1,9 @@
 <template>
   <div class="container">
     <div class="partOne">
-      <div style="margin-bottom: 150px;position: relative;margin-left: 100px;margin-right: 100px">
-        <Section :idx="active" :data="prevData" />
-        <Section :idx="active" :data="currentData" />
+      <div style="margin-bottom: 150px;margin-left: 100px;margin-right: 100px">
+        <Section v-show="prevData!==-1" class="sec bottom" :idx="active" :data="prevData" />
+        <Section class="sec top" :idx="active" :data="currentData" />
       </div>
       <div class="nav">
         <Nav :active="active" @update:active="updateActive" />
@@ -59,7 +59,7 @@ export default {
   data() {
     return {
       active: 0,
-      prevImg: 1, // To track the previous image
+      prevImg: -1,
       arrowRight,
       arrowLeft,
       images: [img1, img2, img3, img4, img5, img6],
@@ -70,22 +70,22 @@ export default {
       return data[this.active];
     },
     prevData(){
-      return data[this.prevImg];
+      return this.prevImg===-1? -1:data[this.prevImg];
     }
   },
   methods: {
     updateActive(newActive) {
-      this.prevImg = this.active; // Update previous image index
-      this.active = newActive; // Update active image index
+      this.prevImg = this.active;
+      this.active = newActive;
       this.animateImageChange();
     },
     prevItem() {
-      this.prevImg = this.active; // Update previous image index
+      this.prevImg = this.active;
       this.active = this.active > 0 ? this.active - 1 : this.images.length - 1;
       this.animateImageChange();
     },
     nextItem() {
-      this.prevImg = this.active; // Update previous image index
+      this.prevImg = this.active;
       this.active = this.active < this.images.length - 1 ? this.active + 1 : 0;
       this.animateImageChange();
     },
@@ -93,25 +93,54 @@ export default {
       const prevImage = document.querySelector(".prev-image");
       const activeImage = document.querySelector(".active-image");
 
-      // Animate the previous image out
+      if (prevImage) gsap.killTweensOf(prevImage);
+      if (activeImage) gsap.killTweensOf(activeImage);
+
       if (prevImage) {
-        gsap.fromTo(prevImage,
-            { opacity: 1, y: 0 },
-            { opacity: 1, y: -500, duration: 2.2, ease: "expo.inOut" }
+        gsap.fromTo(
+            prevImage,
+            {opacity: 1, y: 0},
+            {opacity: 0, y: -500, duration: 1, ease: "expo.inOut"}
         );
       }
 
-      // Animate the new image in
       gsap.fromTo(
           activeImage,
-          { opacity: 1, y: 1200 }, // Start below and invisible
-          { opacity: 1, y: 0, duration: 2, ease: "expo.inOut" }
+          {opacity: 0, y: 1200},
+          {opacity: 1, y: 0, duration: 1, ease: "expo.inOut"}
       );
+
+      this.animateBodyChange();
     },
-  },
+    animateBodyChange() {
+      const prevSection = document.querySelector(".sec.bottom");
+      const currentSection = document.querySelector(".sec.top");
+
+      if (prevSection) gsap.killTweensOf(prevSection);
+      if (currentSection) gsap.killTweensOf(currentSection);
+
+      const timeline = gsap.timeline();
+
+      if (prevSection) {
+        timeline.fromTo(
+            prevSection,
+            {opacity: 1, y: -200},
+            {opacity: 0, y: -500, duration: 1, ease: "expo.inOut"}
+        );
+      }
+
+      if (currentSection) {
+        timeline.fromTo(
+            currentSection,
+            {opacity: 0, y: 300},
+            {opacity: 1, y: 0, duration: 1, ease: "expo.inOut"}
+        );
+      }
+    },
+  }
 };
 </script>
-<style scoped>
+<style scoped lang="scss">
 .container {
   position: relative;
   display: flex;
@@ -140,9 +169,14 @@ export default {
 }
 .sec{
   position: absolute;
-  left: -500px;
-  top: 50%;
+  left: 15%;
   width: 100vw;
+  &.top{
+    top: 30%;
+  }
+  &.bottom{
+    top: 55%;
+  }
 }
 .image-wrapper {
   position: absolute;

@@ -1,5 +1,5 @@
 <template>
-  <div ref="content">
+  <div style="width: 700px" ref="content">
     <p class="what-to-do" v-show="showWhatToDo">WHAT WE DO</p>
     <p class="title">{{ data.title }}</p>
     <p class="paragraph">{{ data.paragraph }}</p>
