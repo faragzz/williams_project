@@ -1,5 +1,5 @@
 <template>
-  <div style="width: 700px" ref="content">
+  <div :style="{ width: isMobile ? '160%' : '700px' }" ref="content">
     <p class="what-to-do" v-show="showWhatToDo">WHAT WE DO</p>
     <p class="title">{{ data.title }}</p>
     <p class="paragraph">{{ data.paragraph }}</p>
@@ -11,6 +11,11 @@ import {gsap} from "gsap";
 
 export default {
   name: "Body",
+  data(){
+    return {
+      isMobile: false,
+    }
+  },
   props: {
     data: {type: Object, required: true},
     idx: {type: Number, required: true},
@@ -24,9 +29,6 @@ export default {
     idx() {
       this.animateText(); // Trigger animation when idx changes
     },
-  },
-  mounted() {
-    this.animateText(); // Run animation on initial render
   },
   methods: {
     animateText() {
@@ -52,6 +54,17 @@ export default {
         );
       });
     },
+    checkIfMobile() {
+      this.isMobile = window.matchMedia("(max-width: 768px)").matches;
+    },
+  },
+  mounted() {
+    this.animateText(); // Run animation on initial render
+    this.checkIfMobile();
+    window.addEventListener("resize", this.checkIfMobile);
+  },
+  beforeDestroy() {
+    window.removeEventListener("resize", this.checkIfMobile);
   },
 };
 </script>

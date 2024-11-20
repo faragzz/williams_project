@@ -1,41 +1,39 @@
 <template>
-  <div class="container">
-    <button class="learn-more" @click="onClick">
-      <span class="circle" aria-hidden="true">
-        <span class="icon arrow"></span>
-        <span class="button-text">{{ buttonText }}</span>
-      </span>
-    </button>
-  </div>
+  <button class="learn-more">
+    <span class="circle" aria-hidden="true">
+      <span class="icon arrow"></span>
+    </span>
+    <span class="button-text">{{txt}}</span>
+  </button>
 </template>
 
 <script>
 export default {
-  name: 'LearnMoreButton',
   props: {
-    buttonText: {
+    txt: {
       type: String,
       default: 'Learn More'
     }
   },
-  methods: {
-    onClick() {
-      // Logic for the button click can go here
-      console.log('Button clicked!');
-    }
-  }
 }
 </script>
 
 <style scoped lang="scss">
 @import url('https://fonts.googleapis.com/css?family=Mukta:700');
 
-$bg: black;
-$white: black;
+$bg: #f3f8fa;
+$white: #fff;
 $black: transparent;
 
 @mixin transition($property: all, $duration: 0.45s, $ease: cubic-bezier(0.65,0,.076,1)) {
   transition: $property $duration $ease;
+}
+
+* {
+  box-sizing: border-box;
+  &::before, &::after {
+    box-sizing: border-box;
+  }
 }
 
 button {
@@ -50,10 +48,9 @@ button {
   padding: 0;
   font-size: inherit;
   font-family: inherit;
-
   &.learn-more {
-    max-width: 200px; /* Max width to prevent the button from being too large */
-    width: 100%; /* Responsive width */
+    width: 25rem;
+    height: 50px;
     .circle {
       @include transition(all, 0.45s, cubic-bezier(0.65,0,.076,1));
       position: relative;
@@ -63,15 +60,14 @@ button {
       height: 3rem;
       background: $black;
       border-radius: 1.625rem;
-      border: 2px solid black;
+      border: 2px solid white;
       .icon {
         @include transition(all, 0.45s, cubic-bezier(0.65,0,.076,1));
         position: absolute;
         top: 0;
         bottom: 0;
         margin: auto;
-        background: black;
-
+        background: white;
         &.arrow {
           @include transition(all, 0.45s, cubic-bezier(0.65,0,.076,1));
           left: 0.625rem;
@@ -85,8 +81,8 @@ button {
             right: 0.0625rem;
             width: 0.625rem;
             height: 0.625rem;
-            border-top: 0.125rem solid black;
-            border-right: 0.125rem solid black;
+            border-top: 0.125rem solid white;
+            border-right: 0.125rem solid white;
             transform: rotate(45deg);
           }
         }
@@ -96,40 +92,29 @@ button {
       @include transition(all, 0.45s, cubic-bezier(0.65,0,.076,1));
       position: absolute;
       top: 0;
-      left: 50px;
+      left: 20%;
       right: 0;
       bottom: 0;
       padding: 0.75rem 0;
       margin: 0 0 0 1.85rem;
-      color: $black;
+      color: white;
       font-weight: 700;
       line-height: 1.6;
-      text-align: center;
+      text-align: left;
       text-transform: uppercase;
     }
-  }
 
+  }
   &:hover {
     .circle {
       width: 100%;
       .icon {
         &.arrow {
-          background: $white;
+          background: white;
           transform: translate(1rem, 0);
         }
       }
     }
-    .button-text {
-      color: $white;
-    }
   }
-}
-
-
-.container {
-  align-self: center;
-  justify-self: center;
-  display: flex;
-  justify-content: center; /* Center button horizontally */
 }
 </style>
