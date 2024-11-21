@@ -81,7 +81,7 @@
 </template>
 
 <script>
-import gsap from "gsap"; // Import GSAP
+import gsap from "gsap";
 import Nav from "@/components/Nav.vue";
 import Section from "@/components/sections/body.vue";
 import Btn from '@/components/Btn.vue'
@@ -140,6 +140,38 @@ export default {
     checkIfMobile() {
       this.isMobile = window.matchMedia("(max-width: 768px)").matches;
     },
+    // animateImageChange() {
+    //   const prevImages = document.querySelectorAll(".prev-image");
+    //   const activeImages = document.querySelectorAll(".active-image");
+    //
+    //   // Kill any existing tweens for all elements
+    //   prevImages.forEach((image) => gsap.killTweensOf(image));
+    //   activeImages.forEach((image) => gsap.killTweensOf(image));
+    //
+    //   const timeline = gsap.timeline();
+    //
+    //   // Animate all previous images
+    //   prevImages.forEach((image, index) => {
+    //     timeline.fromTo(
+    //         image,
+    //         { opacity: 1, y: 0 },
+    //         { opacity: 1, y: -500, duration: 1, ease: "expo.inOut" },
+    //     );
+    //   });
+    //
+    //   // Animate all active images
+    //   activeImages.forEach((image, index) => {
+    //     timeline.fromTo(
+    //         image,
+    //         { opacity: 1, y: this.isMobile?100:1200 ,zIndex: 5},
+    //         { opacity: 1, y: 0,zIndex: 5, duration: 2, ease: "expo.inOut" },
+    //         `-=${2.5}`
+    //     );
+    //   });
+    //
+    //   // Call body change animation
+    //   this.animateBodyChange();
+    // },
     animateImageChange() {
       const prevImage = document.querySelector(".prev-image");
       const activeImage = document.querySelector(".active-image");
@@ -157,39 +189,37 @@ export default {
 
       gsap.fromTo(
           activeImage,
-          {opacity: 0, y: 1200},
+          {opacity: 1, y: 1200},
           {opacity: 1, y: 0, duration: 1, ease: "expo.inOut"}
       );
 
       this.animateBodyChange();
     },
+
     animateBodyChange() {
       const prevSections = document.querySelectorAll(".sec.bottom");
       const currentSections = document.querySelectorAll(".sec.top");
 
-      // Kill any existing tweens for all elements
       prevSections.forEach((section) => gsap.killTweensOf(section));
       currentSections.forEach((section) => gsap.killTweensOf(section));
 
       const timeline = gsap.timeline();
 
-      // Animate all previous sections
       prevSections.forEach((section, index) => {
         timeline.fromTo(
             section,
             {opacity: 1, y: -250},
-            {opacity: 0, y: -500, duration: 2, ease: "power3.out"},
+            {opacity: 0, y: this.isMobile?-300:-500, duration:  this.isMobile?1.6:2, ease: "power3.out"},
             index * 0.2
         );
       });
 
-      // Animate all current sections
       currentSections.forEach((section, index) => {
         timeline.fromTo(
             section,
-            {opacity: 0, y: 300},
-            {opacity: 1, y: 0, duration: 2, ease: "power3.out"},
-            `-=${1.5 - index * 0.2}`
+            {opacity: 0, y: 200},
+            {opacity: 1, y: 0, duration: this.isMobile?2.8:2, ease: "power3.out"},
+            `-=${1.5 - index * -0.8}`
         );
       });
     },
@@ -230,6 +260,7 @@ export default {
   width: 100vw;
   height: 70vh;
   position: relative;
+  z-index: 10;
 }
 
 .partTwoMobile {
@@ -239,6 +270,7 @@ export default {
   align-items: center;
   width: 100vw;
   height: 30vh;
+  z-index: 5;
 }
 
 .partOne {
@@ -265,7 +297,7 @@ export default {
   left: 15%;
   width: 100vw;
   &.top {
-    top: 30%;
+    top: 25%;
     @media (max-width: 768px) {
       top: 0;
     }
@@ -286,6 +318,7 @@ export default {
   position: absolute;
   width: 100%;
   height: 100%;
+  z-index: -10;
 }
 
 .image-wrapper img {
@@ -293,6 +326,7 @@ export default {
   height: 100%;
   object-fit: cover;
   position: absolute;
+  z-index: -10;
 }
 
 .nav {
