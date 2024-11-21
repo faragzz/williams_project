@@ -43,7 +43,7 @@ export default {
 </script>
 
 <style scoped>
-.container{
+.container {
   display: flex;
   flex-direction: column;
   gap: 1rem;

@@ -11,7 +11,7 @@ import {gsap} from "gsap";
 
 export default {
   name: "Body",
-  data(){
+  data() {
     return {
       isMobile: false,
     }
@@ -51,7 +51,6 @@ export default {
             {opacity: 0, y: 50},
             {opacity: 1, y: 0, duration: 0.3, ease: "power2.out"},
             index * 0.2,
-
         );
       });
     },

@@ -3,7 +3,7 @@
     <span class="circle" aria-hidden="true">
       <span class="icon arrow"></span>
     </span>
-    <span class="button-text">{{txt}}</span>
+    <span class="button-text">{{ txt }}</span>
   </button>
 </template>
 
@@ -31,6 +31,7 @@ $black: transparent;
 
 * {
   box-sizing: border-box;
+
   &::before, &::after {
     box-sizing: border-box;
   }
@@ -53,7 +54,7 @@ button {
     width: 37.5rem; /* Increased width by 1.5 times */
     height: 75px; /* Increased height by 1.5 times */
     .circle {
-      @include transition(all, 0.45s, cubic-bezier(0.65,0,.076,1));
+      @include transition(all, 0.45s, cubic-bezier(0.65, 0, .076, 1));
       position: relative;
       display: block;
       margin: 0;
@@ -62,19 +63,22 @@ button {
       background: $black;
       border-radius: 2.4375rem; /* Increased border radius by 1.5 times */
       border: 2px solid white;
+
       .icon {
-        @include transition(all, 0.45s, cubic-bezier(0.65,0,.076,1));
+        @include transition(all, 0.45s, cubic-bezier(0.65, 0, .076, 1));
         position: absolute;
         top: 0;
         bottom: 0;
         margin: auto;
         background: white;
+
         &.arrow {
-          @include transition(all, 0.45s, cubic-bezier(0.65,0,.076,1));
+          @include transition(all, 0.45s, cubic-bezier(0.65, 0, .076, 1));
           left: 0.9375rem; /* Adjusted position for the increased circle */
           width: 1.6875rem; /* Increased arrow width by 1.5 times */
           height: 0.1875rem; /* Increased arrow height by 1.5 times */
           background: none;
+
           &::before {
             position: absolute;
             content: '';
@@ -89,8 +93,9 @@ button {
         }
       }
     }
+
     .button-text {
-      @include transition(all, 0.45s, cubic-bezier(0.65,0,.076,1));
+      @include transition(all, 0.45s, cubic-bezier(0.65, 0, .076, 1));
       position: absolute;
       top: 0;
       left: 15%; /* Adjusted position for the increased width */
@@ -105,9 +110,11 @@ button {
       font-size: 21px;
     }
   }
+
   &:hover {
     .circle {
       width: 100%;
+
       .icon {
         &.arrow {
           background: white;

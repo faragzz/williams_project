@@ -5,11 +5,11 @@
       <div class="partOne">
         <div style="margin-bottom: 150px;margin-left: 100px;margin-right: 100px">
           <div style="position: absolute;left: 0;top: 0; height: 110px;width: 25px;background-color: #2c3e50"/>
-          <Section v-show="prevData !== -1" class="sec bottom" :idx="active" :data="prevData" />
-          <Section class="sec top" :idx="active" :data="currentData" />
+          <Section v-show="prevData !== -1" class="sec bottom" :idx="active" :data="prevData"/>
+          <Section class="sec top" :idx="active" :data="currentData"/>
         </div>
         <div class="nav">
-          <Nav :active="active" @update:active="updateActive" />
+          <Nav :active="active" @update:active="updateActive"/>
           <div style="display: flex; gap: 8px; justify-content: center;">
             <img
                 :src="arrowLeft"
@@ -30,10 +30,10 @@
       </div>
       <div class="partTwo">
         <div class="image-wrapper">
-          <img :src="images[prevImg]" class="prev-image" />
+          <img :src="images[prevImg]" class="prev-image"/>
         </div>
         <div class="image-wrapper">
-          <img :src="images[active]" class="active-image" />
+          <img :src="images[active]" class="active-image"/>
           <div style="position:absolute;left: 15%; top:22%">
             <VerticalNav v-show="this.active===0" :active="active" @update:active="updateActive"/>
           </div>
@@ -45,19 +45,19 @@
     <div v-show="isMobile" class="mobile-container">
       <div class="partTwoMobile">
         <div class="image-wrapper">
-          <img :src="images[prevImg]" class="prev-image" />
+          <img :src="images[prevImg]" class="prev-image"/>
         </div>
         <div class="image-wrapper">
-          <img :src="images[active]" class="active-image" />
+          <img :src="images[active]" class="active-image"/>
         </div>
       </div>
       <div class="partOneMobile" style="transform: scale(0.6)">
         <div style="margin-bottom: 150px;margin-left: 100px;margin-right: 100px">
-          <Section v-show="prevData !== -1" class="sec bottom" :idx="active" :data="prevData" />
-          <Section class="sec top" :idx="active" :data="currentData" />
+          <Section v-show="prevData !== -1" class="sec bottom" :idx="active" :data="prevData"/>
+          <Section class="sec top" :idx="active" :data="currentData"/>
         </div>
         <div class="nav">
-          <Nav :active="active" @update:active="updateActive" />
+          <Nav :active="active" @update:active="updateActive"/>
           <div style="display: flex; gap: 8px; justify-content: center;">
             <img
                 :src="arrowLeft"
@@ -86,7 +86,7 @@ import Nav from "@/components/Nav.vue";
 import Section from "@/components/sections/body.vue";
 import Btn from '@/components/Btn.vue'
 import VerticalNav from "@/components/VerticalNav.vue";
-import { data } from "@/components/sections/data.ts";
+import {data} from "@/components/sections/data.ts";
 import arrowRight from "@/assets/icons/right.svg";
 import arrowLeft from "@/assets/icons/left.svg";
 import img1 from "@/assets/images/1.jpg";
@@ -133,6 +133,11 @@ export default {
       this.animateImageChange();
     },
     nextItem() {
+      this.prevImg = this.active;
+      this.active = this.active < this.images.length - 1 ? this.active + 1 : 0;
+      this.animateImageChange();
+    },
+    autoChangeActive() {
       this.prevImg = this.active;
       this.active = this.active < this.images.length - 1 ? this.active + 1 : 0;
       this.animateImageChange();
@@ -209,7 +214,7 @@ export default {
         timeline.fromTo(
             section,
             {opacity: 1, y: -250},
-            {opacity: 0, y: this.isMobile?-300:-500, duration:  this.isMobile?1.6:2, ease: "power3.out"},
+            {opacity: 0, y: this.isMobile ? -300 : -500, duration: this.isMobile ? 1.6 : 2, ease: "power3.out"},
             index * 0.2
         );
       });
@@ -218,7 +223,7 @@ export default {
         timeline.fromTo(
             section,
             {opacity: 0, y: 200},
-            {opacity: 1, y: 0, duration: this.isMobile?2.8:2, ease: "power3.out"},
+            {opacity: 1, y: 0, duration: this.isMobile ? 2.8 : 2, ease: "power3.out"},
             `-=${1.5 - index * -0.8}`
         );
       });
@@ -227,6 +232,7 @@ export default {
   mounted() {
     this.checkIfMobile();
     window.addEventListener("resize", this.checkIfMobile);
+    setInterval(this.autoChangeActive, 5000);
   },
   beforeDestroy() {
     window.removeEventListener("resize", this.checkIfMobile);
@@ -296,12 +302,14 @@ export default {
   position: absolute;
   left: 15%;
   width: 100vw;
+
   &.top {
     top: 25%;
     @media (max-width: 768px) {
       top: 0;
     }
   }
+
   &.bottom {
     top: 55%;
     @media (max-width: 768px) {
