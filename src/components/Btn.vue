@@ -48,18 +48,19 @@ button {
   padding: 0;
   font-size: inherit;
   font-family: inherit;
+  height: 300px; /* Increased height by 1.5 times */
   &.learn-more {
-    width: 25rem;
-    height: 50px;
+    width: 37.5rem; /* Increased width by 1.5 times */
+    height: 75px; /* Increased height by 1.5 times */
     .circle {
       @include transition(all, 0.45s, cubic-bezier(0.65,0,.076,1));
       position: relative;
       display: block;
       margin: 0;
-      width: 3rem;
-      height: 3rem;
+      width: 4.5rem; /* Increased circle width by 1.5 times */
+      height: 4.5rem; /* Increased circle height by 1.5 times */
       background: $black;
-      border-radius: 1.625rem;
+      border-radius: 2.4375rem; /* Increased border radius by 1.5 times */
       border: 2px solid white;
       .icon {
         @include transition(all, 0.45s, cubic-bezier(0.65,0,.076,1));
@@ -70,19 +71,19 @@ button {
         background: white;
         &.arrow {
           @include transition(all, 0.45s, cubic-bezier(0.65,0,.076,1));
-          left: 0.625rem;
-          width: 1.125rem;
-          height: 0.125rem;
+          left: 0.9375rem; /* Adjusted position for the increased circle */
+          width: 1.6875rem; /* Increased arrow width by 1.5 times */
+          height: 0.1875rem; /* Increased arrow height by 1.5 times */
           background: none;
           &::before {
             position: absolute;
             content: '';
-            top: -0.25rem;
-            right: 0.0625rem;
-            width: 0.625rem;
-            height: 0.625rem;
-            border-top: 0.125rem solid white;
-            border-right: 0.125rem solid white;
+            top: -0.375rem; /* Adjusted position for the increased arrow */
+            right: 0.09375rem; /* Adjusted position for the increased arrow */
+            width: 0.9375rem; /* Increased arrow before width by 1.5 times */
+            height: 0.9375rem; /* Increased arrow before height by 1.5 times */
+            border-top: 0.1875rem solid white; /* Increased border thickness */
+            border-right: 0.1875rem solid white; /* Increased border thickness */
             transform: rotate(45deg);
           }
         }
@@ -92,18 +93,17 @@ button {
       @include transition(all, 0.45s, cubic-bezier(0.65,0,.076,1));
       position: absolute;
       top: 0;
-      left: 20%;
+      left: 15%; /* Adjusted position for the increased width */
       right: 0;
       bottom: 0;
-      padding: 0.75rem 0;
-      margin: 0 0 0 1.85rem;
+      padding: 1.3rem .125rem 0; /* Increased padding */
       color: white;
       font-weight: 700;
       line-height: 1.6;
       text-align: left;
       text-transform: uppercase;
+      font-size: 21px;
     }
-
   }
   &:hover {
     .circle {
@@ -111,10 +111,11 @@ button {
       .icon {
         &.arrow {
           background: white;
-          transform: translate(1rem, 0);
+          transform: translate(1.5rem, 0); /* Adjusted movement for the increased size */
         }
       }
     }
   }
 }
+
 </style>

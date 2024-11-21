@@ -34,7 +34,7 @@
         </div>
         <div class="image-wrapper">
           <img :src="images[active]" class="active-image" />
-          <div style="position:absolute;left: 30%; top:20%">
+          <div style="position:absolute;left: 15%; top:22%">
             <VerticalNav v-show="this.active===0" :active="active" @update:active="updateActive"/>
           </div>
         </div>
@@ -53,7 +53,7 @@
       </div>
       <div class="partOneMobile" style="transform: scale(0.6)">
         <div style="margin-bottom: 150px;margin-left: 100px;margin-right: 100px">
-<!--          <Section v-show="prevData !== -1" class="sec bottom" :idx="active" :data="prevData" />-->
+          <Section v-show="prevData !== -1" class="sec bottom" :idx="active" :data="prevData" />
           <Section class="sec top" :idx="active" :data="currentData" />
         </div>
         <div class="nav">
@@ -150,43 +150,48 @@ export default {
       if (prevImage) {
         gsap.fromTo(
             prevImage,
-            { opacity: 1, y: 0 },
-            { opacity: 0, y: -500, duration: 1, ease: "expo.inOut" }
+            {opacity: 1, y: 0},
+            {opacity: 1, y: -500, duration: 1, ease: "expo.inOut"}
         );
       }
 
       gsap.fromTo(
           activeImage,
-          { opacity: 0, y: 1200 },
-          { opacity: 1, y: 0, duration: 1, ease: "expo.inOut" }
+          {opacity: 0, y: 1200},
+          {opacity: 1, y: 0, duration: 1, ease: "expo.inOut"}
       );
 
       this.animateBodyChange();
     },
     animateBodyChange() {
-      const prevSection = document.querySelector(".sec.bottom");
-      const currentSection = document.querySelector(".sec.top");
+      const prevSections = document.querySelectorAll(".sec.bottom");
+      const currentSections = document.querySelectorAll(".sec.top");
 
-      if (prevSection) gsap.killTweensOf(prevSection);
-      if (currentSection) gsap.killTweensOf(currentSection);
+      // Kill any existing tweens for all elements
+      prevSections.forEach((section) => gsap.killTweensOf(section));
+      currentSections.forEach((section) => gsap.killTweensOf(section));
 
       const timeline = gsap.timeline();
 
-      if (prevSection) {
+      // Animate all previous sections
+      prevSections.forEach((section, index) => {
         timeline.fromTo(
-            prevSection,
-            { opacity: 1, y: -200 },
-            { opacity: 0, y: -500, duration: 1, ease: "expo.inOut" }
+            section,
+            {opacity: 1, y: -250},
+            {opacity: 0, y: -500, duration: 2, ease: "power3.out"},
+            index * 0.2
         );
-      }
+      });
 
-      if (currentSection) {
+      // Animate all current sections
+      currentSections.forEach((section, index) => {
         timeline.fromTo(
-            currentSection,
-            { opacity: 0, y: 300 },
-            { opacity: 1, y: 0, duration: 1, ease: "expo.inOut" }
+            section,
+            {opacity: 0, y: 300},
+            {opacity: 1, y: 0, duration: 2, ease: "power3.out"},
+            `-=${1.5 - index * 0.2}`
         );
-      }
+      });
     },
   },
   mounted() {
@@ -262,7 +267,7 @@ export default {
   &.top {
     top: 30%;
     @media (max-width: 768px) {
-      top: 0%;
+      top: 0;
     }
   }
   &.bottom {
@@ -271,6 +276,7 @@ export default {
       top: 20%;
     }
   }
+
   @media (max-width: 768px) {
     left: -100px;
   }
@@ -295,5 +301,8 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 32px;
+  @media (max-width: 768px) {
+    bottom: -100px;
+  }
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
-  <div :style="{ width: isMobile ? '160%' : '700px' }" ref="content">
-    <p class="what-to-do" v-show="showWhatToDo">WHAT WE DO</p>
+  <div :style="{ width: isMobile ? '150%' : '700px'}" ref="content">
+    <p class="what-to-do" :style="{ visibility: showWhatToDo ? 'visible' : 'hidden' }">WHAT WE DO</p>
     <p class="title">{{ data.title }}</p>
     <p class="paragraph">{{ data.paragraph }}</p>
   </div>
@@ -49,8 +49,9 @@ export default {
         timeline.fromTo(
             el,
             {opacity: 0, y: 50},
-            {opacity: 1, y: 0, duration: 0.6, ease: "power2.out"},
-            index * 0.3 // Stagger animations
+            {opacity: 1, y: 0, duration: 0.3, ease: "power2.out"},
+            index * 0.2,
+
         );
       });
     },
